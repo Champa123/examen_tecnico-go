@@ -18,7 +18,7 @@ func ReadTransactions(path string) ([]*model.Transaction, error) {
 	transactions := []*model.Transaction{}
 	for i, record := range records {
 		if i == 0 {
-			if record[0] == "Id" && record[1] == "Date" && record[2] == "Transaction" {
+			if record[0] != "Id" && record[1] != "Date" && record[2] != "Transaction" {
 				err := errors.New("invalid csv format")
 				return nil, err
 			}
@@ -30,7 +30,7 @@ func ReadTransactions(path string) ([]*model.Transaction, error) {
 				return nil, err
 			}
 
-			date, err := time.Parse("2006-01-02", record[1])
+			date, err := time.Parse("1/2", record[1])
 
 			if err != nil {
 				return nil, err
@@ -55,7 +55,7 @@ func ReadTransactions(path string) ([]*model.Transaction, error) {
 }
 
 func ProcessTransactions(transactions []*model.Transaction) *model.Summary {
-	transactionMap := make(map[time.Month]float64)
+	transactionMap := make(map[time.Month]int)
 	avarageCredit := 0.0
 	avarageDebit := 0.0
 	totalBalance := 0.0
@@ -63,7 +63,7 @@ func ProcessTransactions(transactions []*model.Transaction) *model.Summary {
 	totalDebits := 0.0
 
 	for _, transaction := range transactions {
-		transactionMap[transaction.Date.Month()] += transaction.Amount
+		transactionMap[transaction.Date.Month()] += 1
 
 		if transaction.Amount > 0 {
 			avarageCredit += transaction.Amount

@@ -7,7 +7,7 @@ import (
 
 type MonthlyTransaction struct {
 	Month time.Month
-	Total float64
+	Total int
 }
 
 func (t MonthlyTransaction) String() string {

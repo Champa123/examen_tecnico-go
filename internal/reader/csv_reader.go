@@ -21,10 +21,6 @@ func ReadCSV(path string) ([][]string, error) {
 		fmt.Println("Error reading all records:", err)
 		return nil, err
 	}
-	for _, record := range records {
-		fmt.Println(record)
-
-	}
 
 	return records, nil
 }
