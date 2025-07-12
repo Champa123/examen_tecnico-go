@@ -2,7 +2,6 @@ package service
 
 import (
 	"examen-tecnico-stori/internal/model"
-	"fmt"
 	"testing"
 	"time"
 )
@@ -31,13 +30,17 @@ func TestReadTransactions(t *testing.T) {
 }
 
 func TestReadTransactionsBrokenCsv(t *testing.T) {
-	_, err := ReadTransactions("../../brokenTransactions.csv")
+	_, err := ReadTransactions(getBasePath() + "badCSVFormat.csv")
 
 	if err == nil {
 		t.Errorf("err should not be nil, is %s", err)
 	}
 
-	fmt.Println(err.Error())
+	expected := generateExpectedErrorOnBadCSVFormat()
+
+	if err.Error() != expected {
+		t.Errorf("error is different from expected, got: %s, wanted: %s", err.Error(), expected)
+	}
 
 }
 
@@ -116,4 +119,12 @@ func generateExpectedSummary() *model.Summary {
 		AvarageCredit: 35.25,
 	}
 
+}
+
+func generateExpectedErrorOnBadCSVFormat() string {
+	return "invalid csv format"
+}
+
+func getBasePath() string {
+	return "../../resources/test/"
 }

@@ -11,7 +11,9 @@ import (
 )
 
 func GetTransactions(c *gin.Context) {
-	var transactions, err = service.ReadTransactions("../../transactions.csv")
+
+	path := c.Param("path")
+	var transactions, err = service.ReadTransactions(path)
 
 	if err != nil {
 		panic(err)

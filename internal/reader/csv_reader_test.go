@@ -54,7 +54,7 @@ func TestReadCSVFailure(t *testing.T) {
 
 func TestReadCSVBrokenTransactions(t *testing.T) {
 
-	_, err := ReadCSV("../../brokenTransactions.csv")
+	_, err := ReadCSV(getBasePath() + "brokenTransactions.csv")
 
 	if err == nil {
 		t.Errorf("error should be nil, is %s", err)
@@ -84,4 +84,9 @@ func expectedErrorForNoExistingPath() string {
 
 func expectedErrorForBrokenTransactionsCSV() string {
 	return "record on line 2; parse error on line 4, column 4: extraneous or missing \" in quoted-field"
+}
+
+func getBasePath() string {
+	return "../../resources/test/"
+
 }
