@@ -12,8 +12,13 @@ import (
 
 func GetTransactions(c *gin.Context) {
 
-	path := c.Param("path")
-	var transactions, err = service.ReadTransactions(path)
+	var req SummaryRequest
+
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request body"})
+		return
+	}
+	var transactions, err = service.ReadTransactions(req.PathToFile)
 
 	if err != nil {
 		panic(err)
@@ -21,7 +26,7 @@ func GetTransactions(c *gin.Context) {
 
 	summary := service.ProcessTransactions(transactions)
 
-	email.SendEmail(summary)
+	email.SendEmail(summary, req.UserMail)
 
 	c.IndentedJSON(http.StatusOK, summary)
 }

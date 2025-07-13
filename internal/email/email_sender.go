@@ -10,11 +10,11 @@ import (
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
 )
 
-func SendEmail(summary *model.Summary) {
+func SendEmail(summary *model.Summary, email string) {
 
 	from := mail.NewEmail("Andres", "andres.fernandez.bina@gmail.com")
 	subject := "Summary"
-	to := mail.NewEmail("Andres", "afernandezbina@frba.utn.edu.ar") // Podria obtenerse el mail dinamicamente
+	to := mail.NewEmail("Stori user", email)
 	htmlContent := buildHtml(summary)
 	htmlContent += "<img src=cid:stori-logo></img>"
 	message := mail.NewSingleEmail(from, subject, to, "", htmlContent)

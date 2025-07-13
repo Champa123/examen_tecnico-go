@@ -8,7 +8,7 @@ import (
 
 func main() {
 	router := gin.Default()
-	router.GET("/transactions/:path", controller.GetTransactions)
+	router.POST("/transactions/summary/email", controller.GetTransactions)
 
 	router.Run("0.0.0.0:8080")
 }
